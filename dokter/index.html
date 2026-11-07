@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dokter — Klinik Sehat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="..assets/css/style.css">
+</head>
+<body class="auth-pending">
+
+  <div class="dashboard">
+
+    <aside class="sidebar">
+      <div class="sidebar-brand">✚ KLINIK · DOKTER</div>
+      <p class="sidebar-label">Menu</p>
+      <nav class="sidebar-menu" aria-label="Menu dokter">
+        <button type="button" data-target="dashboard" class="active" aria-pressed="true">
+          <span class="icon" aria-hidden="true">▦</span> Dashboard
+        </button>
+        <button type="button" data-target="antrean" aria-pressed="false">
+          <span class="icon" aria-hidden="true">⏱</span> Antrean Pemeriksaan
+        </button>
+        <button type="button" data-target="pemeriksaan" aria-pressed="false">
+          <span class="icon" aria-hidden="true">✚</span> Pemeriksaan
+        </button>
+        <button type="button" data-target="riwayat" aria-pressed="false">
+          <span class="icon" aria-hidden="true">↻</span> Riwayat Pemeriksaan
+        </button>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <span class="sidebar-avatar" id="user-avatar" aria-hidden="true">?</span>
+          <span class="sidebar-user-info">
+            <strong id="user-nama">Memuat…</strong>
+            <span id="user-role">—</span>
+          </span>
+        </div>
+        <a href="../api/global/logout.php" class="logout-link">← Logout</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="main-header">
+        <div>
+          <p class="breadcrumb">Dokter / <span id="breadcrumb-active">Dashboard</span></p>
+          <h1 id="page-title">Dashboard</h1>
+        </div>
+        <p class="main-date" id="today-date"></p>
+      </header>
+
+      <!-- DASHBOARD -->
+      <section id="section-dashboard" class="content-section">
+        <div class="stats-grid" id="stats-grid">
+          <div class="stat-card"><p class="stat-label">Menunggu</p><p class="stat-value">—</p></div>
+          <div class="stat-card"><p class="stat-label">Diperiksa</p><p class="stat-value">—</p></div>
+          <div class="stat-card"><p class="stat-label">Menunggu Lab</p><p class="stat-value">—</p></div>
+          <div class="stat-card"><p class="stat-label">Selesai</p><p class="stat-value">—</p></div>
+        </div>
+        <h2 style="margin-bottom: var(--space-4); font-size: var(--text-lg); font-weight: 700; letter-spacing: -0.02em;">
+          Pasien Menunggu
+        </h2>
+        <div id="dashboard-antrean"><div class="loading">Memuat…</div></div>
+      </section>
+
+      <!-- ANTREAN -->
+      <section id="section-antrean" class="content-section" hidden>
+        <div class="toolbar">
+          <input type="date" id="antrean-tanggal" />
+          <span class="spacer"></span>
+          <button class="btn btn--ghost" id="btn-refresh-antrean">↻ Muat Ulang</button>
+        </div>
+        <div id="antrean-table"><div class="loading">Memuat…</div></div>
+      </section>
+
+      <!-- PEMERIKSAAN -->
+      <section id="section-pemeriksaan" class="content-section" hidden>
+        <div id="pemeriksaan-container">
+          <div class="empty-state">
+            Pilih pasien dari <strong>Antrean Pemeriksaan</strong> untuk mulai.
+          </div>
+        </div>
+      </section>
+
+      <!-- RIWAYAT -->
+      <section id="section-riwayat" class="content-section" hidden>
+        <div class="toolbar">
+          <input type="date" id="riwayat-dari" title="Dari tanggal" />
+          <input type="date" id="riwayat-sampai" title="Sampai tanggal" />
+          <input type="search" id="riwayat-search" placeholder="Cari nama / No. RM / No. Reg…" style="min-width: 220px;" />
+        </div>
+        <div id="riwayat-table"><div class="loading">Memuat…</div></div>
+      </section>
+
+    </main>
+  </div>
+
+  <script type="module" src="../js/dokter/main.js"></script>
+</body>
+</html>

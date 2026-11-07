@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kasir — Klinik Sehat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="auth-pending">
+
+  <div class="dashboard">
+
+    <aside class="sidebar">
+      <div class="sidebar-brand">✚ KLINIK · KASIR</div>
+      <p class="sidebar-label">Menu</p>
+      <nav class="sidebar-menu" aria-label="Menu kasir">
+        <button type="button" data-target="dashboard" class="active" aria-pressed="true">
+          <span class="icon" aria-hidden="true">▦</span> Dashboard
+        </button>
+        <button type="button" data-target="tagihan" aria-pressed="false">
+          <span class="icon" aria-hidden="true">☰</span> Tagihan
+        </button>
+        <button type="button" data-target="pembayaran" aria-pressed="false">
+          <span class="icon" aria-hidden="true">✚</span> Pembayaran
+        </button>
+        <button type="button" data-target="riwayat" aria-pressed="false">
+          <span class="icon" aria-hidden="true">↻</span> Riwayat Transaksi
+        </button>
+        <button type="button" data-target="kuitansi" aria-pressed="false">
+          <span class="icon" aria-hidden="true">⎙</span> Kuitansi
+        </button>
+        <button type="button" data-target="laporan" aria-pressed="false">
+          <span class="icon" aria-hidden="true">▤</span> Laporan Keuangan
+        </button>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <span class="sidebar-avatar" id="user-avatar" aria-hidden="true">?</span>
+          <span class="sidebar-user-info">
+            <strong id="user-nama">Memuat…</strong>
+            <span id="user-role">—</span>
+          </span>
+        </div>
+        <a href="../api/global/logout.php" class="logout-link">← Logout</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="main-header">
+        <div>
+          <p class="breadcrumb">Kasir / <span id="breadcrumb-active">Dashboard</span></p>
+          <h1 id="page-title">Dashboard</h1>
+        </div>
+        <p class="main-date" id="today-date"></p>
+      </header>
+
+      <!-- DASHBOARD -->
+      <section id="section-dashboard" class="content-section">
+        <div class="stats-grid" id="stats-grid">
+          <div class="stat-card"><p class="stat-label">Pendapatan Hari Ini</p><p class="stat-value">—</p></div>
+          <div class="stat-card"><p class="stat-label">Transaksi Hari Ini</p><p class="stat-value">—</p></div>
+          <div class="stat-card"><p class="stat-label">Belum Bayar</p><p class="stat-value">—</p></div>
+          <div class="stat-card"><p class="stat-label">Sebagian</p><p class="stat-value">—</p></div>
+        </div>
+        <h2 style="margin-bottom: var(--space-4); font-size: var(--text-lg); font-weight: 700; letter-spacing: -0.02em;">
+          Tagihan Belum Lunas
+        </h2>
+        <div id="dashboard-belum"><div class="loading">Memuat…</div></div>
+      </section>
+
+      <!-- TAGIHAN -->
+      <section id="section-tagihan" class="content-section" hidden>
+        <div class="toolbar">
+          <input type="date" id="tagihan-dari" title="Dari" />
+          <input type="date" id="tagihan-sampai" title="Sampai" />
+          <select id="tagihan-status">
+            <option value="">Semua status</option>
+            <option value="belum_bayar">Belum Bayar</option>
+            <option value="sebagian">Sebagian</option>
+            <option value="lunas">Lunas</option>
+          </select>
+          <input type="search" id="tagihan-search" placeholder="Cari nama / No. Tagihan…" style="min-width: 200px;" />
+        </div>
+        <div id="tagihan-table"><div class="loading">Memuat…</div></div>
+      </section>
+
+      <!-- PEMBAYARAN -->
+      <section id="section-pembayaran" class="content-section" hidden>
+        <div class="toolbar">
+          <input type="search" id="pembayaran-search" placeholder="Cari nama pasien / No. RM / No. Reg…" style="min-width: 320px;" />
+          <span class="spacer"></span>
+        </div>
+        <div id="pembayaran-search-result"></div>
+        <div id="pembayaran-container">
+          <div class="empty-state">
+            Ketik nama pasien (min. 2 huruf) di kotak pencarian di atas.
+          </div>
+        </div>
+      </section>
+
+      <!-- RIWAYAT -->
+      <section id="section-riwayat" class="content-section" hidden>
+        <div class="toolbar">
+          <input type="date" id="riwayat-dari" title="Dari" />
+          <input type="date" id="riwayat-sampai" title="Sampai" />
+          <select id="riwayat-status">
+            <option value="">Semua status</option>
+            <option value="belum_bayar">Belum Bayar</option>
+            <option value="sebagian">Sebagian</option>
+            <option value="lunas">Lunas</option>
+          </select>
+          <input type="search" id="riwayat-search" placeholder="Cari nama / No. Tagihan…" style="min-width: 200px;" />
+        </div>
+        <div id="riwayat-table"><div class="loading">Memuat…</div></div>
+      </section>
+
+      <!-- KUITANSI -->
+      <section id="section-kuitansi" class="content-section" hidden>
+        <div class="toolbar">
+          <input type="search" id="kuitansi-search" placeholder="Cari No. Tagihan / Nama pasien…" style="min-width: 240px;" />
+          <span class="spacer"></span>
+          <button class="btn btn--ghost" id="btn-refresh-kuitansi">↻ Muat Ulang</button>
+        </div>
+        <div id="kuitansi-table"><div class="loading">Memuat…</div></div>
+      </section>
+
+      <!-- LAPORAN -->
+      <section id="section-laporan" class="content-section" hidden>
+        <div class="toolbar">
+          <input type="date" id="laporan-dari" title="Dari" />
+          <input type="date" id="laporan-sampai" title="Sampai" />
+          <button class="btn btn--primary" id="btn-tampil-laporan">Tampilkan</button>
+          <span class="spacer"></span>
+          <button class="btn btn--ghost" id="btn-export-csv">↓ Ekspor CSV</button>
+        </div>
+        <div id="laporan-container"><div class="loading">Memuat…</div></div>
+      </section>
+
+    </main>
+  </div>
+
+  <script type="module" src="../js/kasir/main.js"></script>
+</body>
+</html>

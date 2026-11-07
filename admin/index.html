@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Klinik Sehat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="auth-pending">
+
+  <div class="dashboard">
+
+    <!-- ============ SIDEBAR ============ -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">✚ KLINIK</div>
+
+      <p class="sidebar-label">Menu</p>
+
+      <nav class="sidebar-menu" aria-label="Menu utama">
+        <button type="button" data-target="dashboard" class="active" aria-pressed="true">
+          <span class="icon" aria-hidden="true">▦</span> Dashboard
+        </button>
+        <button type="button" data-target="pasien" aria-pressed="false">
+          <span class="icon" aria-hidden="true">☰</span> Data Pasien
+        </button>
+        <button type="button" data-target="pendaftaran" aria-pressed="false">
+          <span class="icon" aria-hidden="true">✎</span> Pendaftaran
+        </button>
+        <button type="button" data-target="antrean" aria-pressed="false">
+          <span class="icon" aria-hidden="true">⏱</span> Antrean
+        </button>
+        <button type="button" data-target="jadwal" aria-pressed="false">
+          <span class="icon" aria-hidden="true">✚</span> Jadwal Dokter
+        </button>
+        <button type="button" data-target="riwayat" aria-pressed="false">
+          <span class="icon" aria-hidden="true">↻</span> Riwayat Kunjungan
+        </button>
+        <button type="button" data-target="janji" aria-pressed="false">
+          <span class="icon" aria-hidden="true">◷</span> Janji Temu
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <span class="sidebar-avatar" id="user-avatar" aria-hidden="true">?</span>
+          <span class="sidebar-user-info">
+            <strong id="user-nama">Memuat…</strong>
+            <span id="user-role">—</span>
+          </span>
+        </div>
+        <a href="../api/global/logout.php" class="logout-link">← Logout</a>
+      </div>
+    </aside>
+
+    <!-- ============ MAIN ============ -->
+    <main class="main-content">
+
+      <header class="main-header">
+        <div>
+          <p class="breadcrumb">Admin / <span id="breadcrumb-active">Dashboard</span></p>
+          <h1 id="page-title">Dashboard</h1>
+        </div>
+        <p class="main-date" id="today-date"></p>
+      </header>
+
+      <!-- ---------- DASHBOARD ---------- -->
+      <section id="section-dashboard" class="content-section">
+        <div class="stats-grid" id="stats-grid">
+          <div class="stat-card"><p class="stat-label">Total Pasien</p><p class="stat-value">—</p></div>
+          <div class="stat-card"><p class="stat-label">Hari Ini</p><p class="stat-value">—</p></div>
+          <div class="stat-card"><p class="stat-label">Menunggu</p><p class="stat-value">—</p></div>
+          <div class="stat-card"><p class="stat-label">Selesai</p><p class="stat-value">—</p></div>
+        </div>
+
+        <h2 style="margin-bottom: var(--space-4); font-size: var(--text-lg); font-weight: 700; letter-spacing: -0.02em;">
+          Pendaftaran Terbaru
+        </h2>
+        <div id="dashboard-recent"><div class="loading">Memuat…</div></div>
+      </section>
+
+      <!-- ---------- PASIEN ---------- -->
+      <section id="section-pasien" class="content-section" hidden>
+        <div class="toolbar">
+          <input type="search" id="pasien-search" placeholder="Cari nama / No. RM / telepon…" style="min-width: 220px;" />
+          <span class="spacer"></span>
+          <button class="btn btn--primary" id="btn-tambah-pasien">+ Tambah Pasien</button>
+        </div>
+        <div id="pasien-table"><div class="loading">Memuat…</div></div>
+      </section>
+
+      <!-- ---------- PENDAFTARAN ---------- -->
+      <section id="section-pendaftaran" class="content-section" hidden>
+        <div class="toolbar">
+          <input type="date" id="pendaftaran-tanggal" />
+          <span class="spacer"></span>
+          <button class="btn btn--primary" id="btn-tambah-pendaftaran">+ Pendaftaran Baru</button>
+        </div>
+        <div id="pendaftaran-table"><div class="loading">Memuat…</div></div>
+      </section>
+
+      <!-- ---------- ANTRIAN ---------- -->
+      <section id="section-antrean" class="content-section" hidden>
+        <div class="toolbar">
+          <input type="date" id="antrean-tanggal" />
+        </div>
+        <div id="antrean-table"><div class="loading">Memuat…</div></div>
+      </section>
+
+      <!-- ---------- RIWAYAT KUNJUNGAN ---------- -->
+      <section id="section-riwayat" class="content-section" hidden>
+        <div class="toolbar">
+          <input type="date" id="riwayat-dari" title="Dari tanggal" />
+          <input type="date" id="riwayat-sampai" title="Sampai tanggal" />
+          <input type="search" id="riwayat-search" placeholder="Cari nama / No. RM / No. Reg…" style="min-width: 220px;" />
+        </div>
+        <div id="riwayat-table"><div class="loading">Memuat…</div></div>
+      </section>
+
+      <!-- ---------- JANJI TEMU ---------- -->
+      <section id="section-janji" class="content-section" hidden>
+        <div class="toolbar">
+          <input type="date" id="janji-tanggal" title="Tanggal" />
+          <select id="janji-status">
+            <option value="">Semua status</option>
+            <option value="dijadwalkan">Dijadwalkan</option>
+            <option value="dikonfirmasi">Dikonfirmasi</option>
+            <option value="selesai">Selesai</option>
+            <option value="dibatalkan">Dibatalkan</option>
+          </select>
+          <span class="spacer"></span>
+          <button class="btn btn--primary" id="btn-tambah-janji">+ Buat Janji Temu</button>
+        </div>
+        <div id="janji-table"><div class="loading">Memuat…</div></div>
+      </section>
+
+      <!-- ---------- JADWAL ---------- -->
+      <section id="section-jadwal" class="content-section" hidden>
+        <div class="toolbar">
+          <span class="spacer"></span>
+          <button class="btn btn--primary" id="btn-tambah-jadwal">+ Tambah Jadwal</button>
+        </div>
+        <div id="jadwal-table"><div class="loading">Memuat…</div></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ============ MODAL (generic) ============ -->
+  <div class="modal-backdrop" id="modal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-header">
+        <h3 id="modal-title">Judul</h3>
+        <button class="modal-close" type="button" data-close="modal" aria-label="Tutup">✕</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+      <div class="modal-footer">
+        <button class="btn btn--ghost" type="button" data-close="modal">Batal</button>
+        <button class="btn btn--primary" type="button" id="modal-submit">Simpan</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="../js/admin/main.js"></script>
+</body>
+</html>

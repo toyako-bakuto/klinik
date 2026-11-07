@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laboratorium — Klinik Sehat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="auth-pending">
+
+  <div class="dashboard">
+
+    <aside class="sidebar">
+      <div class="sidebar-brand">✚ KLINIK · LAB</div>
+      <p class="sidebar-label">Menu</p>
+      <nav class="sidebar-menu" aria-label="Menu laboratorium">
+        <button type="button" data-target="dashboard" class="active" aria-pressed="true">
+          <span class="icon" aria-hidden="true">▦</span> Dashboard
+        </button>
+        <button type="button" data-target="permintaan" aria-pressed="false">
+          <span class="icon" aria-hidden="true">✉</span> Permintaan Lab
+        </button>
+        <button type="button" data-target="sampel" aria-pressed="false">
+          <span class="icon" aria-hidden="true">◐</span> Sampel
+        </button>
+        <button type="button" data-target="hasil" aria-pressed="false">
+          <span class="icon" aria-hidden="true">✎</span> Hasil Pemeriksaan
+        </button>
+        <button type="button" data-target="validasi" aria-pressed="false">
+          <span class="icon" aria-hidden="true">✓</span> Validasi Hasil
+        </button>
+        <button type="button" data-target="riwayat" aria-pressed="false">
+          <span class="icon" aria-hidden="true">↻</span> Riwayat Laboratorium
+        </button>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <span class="sidebar-avatar" id="user-avatar" aria-hidden="true">?</span>
+          <span class="sidebar-user-info">
+            <strong id="user-nama">Memuat…</strong>
+            <span id="user-role">—</span>
+          </span>
+        </div>
+        <a href="../api/global/logout.php" class="logout-link">← Logout</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="main-header">
+        <div>
+          <p class="breadcrumb">Lab / <span id="breadcrumb-active">Dashboard</span></p>
+          <h1 id="page-title">Dashboard</h1>
+        </div>
+        <p class="main-date" id="today-date"></p>
+      </header>
+
+      <!-- DASHBOARD -->
+      <section id="section-dashboard" class="content-section">
+        <div class="stats-grid" id="stats-grid">
+          <div class="stat-card"><p class="stat-label">Permintaan Masuk</p><p class="stat-value">—</p></div>
+          <div class="stat-card"><p class="stat-label">Sampel Diambil</p><p class="stat-value">—</p></div>
+          <div class="stat-card"><p class="stat-label">Diproses</p><p class="stat-value">—</p></div>
+          <div class="stat-card"><p class="stat-label">Menunggu Validasi</p><p class="stat-value">—</p></div>
+        </div>
+        <h2 style="margin-bottom: var(--space-4); font-size: var(--text-lg); font-weight: 700; letter-spacing: -0.02em;">
+          Permintaan Masuk
+        </h2>
+        <div id="dashboard-masuk"><div class="loading">Memuat…</div></div>
+      </section>
+
+      <!-- PERMINTAAN -->
+      <section id="section-permintaan" class="content-section" hidden>
+        <div class="toolbar">
+          <input type="date" id="permintaan-dari" title="Dari" />
+          <input type="date" id="permintaan-sampai" title="Sampai" />
+          <select id="permintaan-status">
+            <option value="">Semua status</option>
+            <option value="diminta">Diminta</option>
+            <option value="sampel_diambil">Sampel Diambil</option>
+            <option value="diproses">Diproses</option>
+            <option value="hasil_diinput">Hasil Diinput</option>
+            <option value="divalidasi">Divalidasi</option>
+            <option value="ditolak">Ditolak</option>
+          </select>
+          <input type="search" id="permintaan-search" placeholder="Cari nama / No. RM / jenis lab…" style="min-width: 220px;" />
+        </div>
+        <div id="permintaan-table"><div class="loading">Memuat…</div></div>
+      </section>
+
+      <!-- SAMPEL -->
+      <section id="section-sampel" class="content-section" hidden>
+        <div id="sampel-container">
+          <div class="empty-state">
+            Pilih permintaan dari menu <strong>Permintaan Lab</strong> untuk mencatat sampel.
+          </div>
+        </div>
+      </section>
+
+      <!-- HASIL -->
+      <section id="section-hasil" class="content-section" hidden>
+        <div id="hasil-container">
+          <div class="empty-state">
+            Pilih permintaan berstatus <strong>Diproses</strong> untuk input hasil.
+          </div>
+        </div>
+      </section>
+
+      <!-- VALIDASI -->
+      <section id="section-validasi" class="content-section" hidden>
+        <div id="validasi-container">
+          <div class="empty-state">
+            Hasil yang menunggu validasi akan muncul di sini.
+          </div>
+        </div>
+      </section>
+
+      <!-- RIWAYAT -->
+      <section id="section-riwayat" class="content-section" hidden>
+        <div class="toolbar">
+          <input type="date" id="riwayat-dari" title="Dari" />
+          <input type="date" id="riwayat-sampai" title="Sampai" />
+          <select id="riwayat-status">
+            <option value="">Semua status</option>
+            <option value="divalidasi">Divalidasi</option>
+            <option value="ditolak">Ditolak</option>
+          </select>
+          <input type="search" id="riwayat-search" placeholder="Cari nama / No. RM / jenis lab…" style="min-width: 220px;" />
+        </div>
+        <div id="riwayat-table"><div class="loading">Memuat…</div></div>
+      </section>
+
+    </main>
+  </div>
+
+  <script type="module" src="../js/lab/main.js"></script>
+</body>
+</html>

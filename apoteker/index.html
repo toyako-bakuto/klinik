@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apoteker — Klinik Sehat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="auth-pending">
+
+  <div class="dashboard">
+
+    <aside class="sidebar">
+      <div class="sidebar-brand">✚ KLINIK · APOTEKER</div>
+      <p class="sidebar-label">Menu</p>
+      <nav class="sidebar-menu" aria-label="Menu apoteker">
+        <button type="button" data-target="dashboard" class="active" aria-pressed="true">
+          <span class="icon" aria-hidden="true">▦</span> Dashboard
+        </button>
+        <button type="button" data-target="masuk" aria-pressed="false">
+          <span class="icon" aria-hidden="true">✉</span> Resep Masuk
+        </button>
+        <button type="button" data-target="verifikasi" aria-pressed="false">
+          <span class="icon" aria-hidden="true">✓</span> Verifikasi Resep
+        </button>
+        <button type="button" data-target="penyiapan" aria-pressed="false">
+          <span class="icon" aria-hidden="true">✚</span> Penyiapan Obat
+        </button>
+        <button type="button" data-target="penyerahan" aria-pressed="false">
+          <span class="icon" aria-hidden="true">↦</span> Penyerahan Obat
+        </button>
+        <button type="button" data-target="obat" aria-pressed="false">
+          <span class="icon" aria-hidden="true">☰</span> Data Obat
+        </button>
+        <button type="button" data-target="stok" aria-pressed="false">
+          <span class="icon" aria-hidden="true">▤</span> Stok Obat
+        </button>
+        <button type="button" data-target="riwayat" aria-pressed="false">
+          <span class="icon" aria-hidden="true">↻</span> Riwayat Resep
+        </button>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <span class="sidebar-avatar" id="user-avatar" aria-hidden="true">?</span>
+          <span class="sidebar-user-info">
+            <strong id="user-nama">Memuat…</strong>
+            <span id="user-role">—</span>
+          </span>
+        </div>
+        <a href="../api/global/logout.php" class="logout-link">← Logout</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="main-header">
+        <div>
+          <p class="breadcrumb">Apoteker / <span id="breadcrumb-active">Dashboard</span></p>
+          <h1 id="page-title">Dashboard</h1>
+        </div>
+        <p class="main-date" id="today-date"></p>
+      </header>
+
+      <!-- DASHBOARD -->
+      <section id="section-dashboard" class="content-section">
+        <div class="stats-grid" id="stats-grid">
+          <div class="stat-card"><p class="stat-label">Resep Masuk</p><p class="stat-value">—</p></div>
+          <div class="stat-card"><p class="stat-label">Diverifikasi</p><p class="stat-value">—</p></div>
+          <div class="stat-card"><p class="stat-label">Disiapkan</p><p class="stat-value">—</p></div>
+          <div class="stat-card"><p class="stat-label">Selesai Hari Ini</p><p class="stat-value">—</p></div>
+        </div>
+        <div id="dashboard-resep"><div class="loading">Memuat…</div></div>
+      </section>
+
+      <!-- RESEP MASUK -->
+      <section id="section-masuk" class="content-section" hidden>
+        <div class="toolbar">
+          <span class="spacer"></span>
+          <button class="btn btn--ghost" id="btn-refresh-masuk">↻ Muat Ulang</button>
+        </div>
+        <div id="masuk-table"><div class="loading">Memuat…</div></div>
+      </section>
+
+      <!-- VERIFIKASI -->
+      <section id="section-verifikasi" class="content-section" hidden>
+        <div id="verifikasi-container">
+          <div class="empty-state">
+            Resep yang sudah masuk akan muncul di sini untuk diverifikasi.
+          </div>
+        </div>
+      </section>
+
+      <!-- PENYIAPAN -->
+      <section id="section-penyiapan" class="content-section" hidden>
+        <div id="penyiapan-container">
+          <div class="empty-state">
+            Resep terverifikasi akan muncul di sini untuk disiapkan.
+          </div>
+        </div>
+      </section>
+
+      <!-- PENYERAHAN -->
+      <section id="section-penyerahan" class="content-section" hidden>
+        <div id="penyerahan-container">
+          <div class="empty-state">
+            Obat yang sudah disiapkan akan muncul di sini untuk diserahkan ke pasien.
+          </div>
+        </div>
+      </section>
+
+      <!-- DATA OBAT -->
+      <section id="section-obat" class="content-section" hidden>
+        <div class="toolbar">
+          <input type="search" id="obat-search" placeholder="Cari nama obat…" style="min-width: 220px;" />
+          <span class="spacer"></span>
+          <button class="btn btn--primary" id="btn-tambah-obat">+ Tambah Obat</button>
+        </div>
+        <div id="obat-table"><div class="loading">Memuat…</div></div>
+      </section>
+
+      <!-- STOK OBAT -->
+      <section id="section-stok" class="content-section" hidden>
+        <div class="toolbar">
+          <select id="stok-filter-obat">
+            <option value="">Semua obat</option>
+          </select>
+          <input type="date" id="stok-dari" title="Dari tanggal" />
+          <input type="date" id="stok-sampai" title="Sampai tanggal" />
+          <span class="spacer"></span>
+          <button class="btn btn--ghost" id="btn-refresh-stok">↻ Muat Ulang</button>
+        </div>
+        <div id="stok-table"><div class="loading">Memuat…</div></div>
+      </section>
+
+      <!-- RIWAYAT -->
+      <section id="section-riwayat" class="content-section" hidden>
+        <div class="toolbar">
+          <input type="date" id="riwayat-dari" title="Dari tanggal" />
+          <input type="date" id="riwayat-sampai" title="Sampai tanggal" />
+          <select id="riwayat-status">
+            <option value="">Semua status</option>
+            <option value="diserahkan">Diserahkan</option>
+            <option value="ditolak">Ditolak</option>
+          </select>
+          <input type="search" id="riwayat-search" placeholder="Cari nama / No. RM…" style="min-width: 200px;" />
+        </div>
+        <div id="riwayat-table"><div class="loading">Memuat…</div></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- MODAL (generic) -->
+  <div class="modal-backdrop" id="modal" style="
+    position: fixed; inset: 0; display: none; align-items: center;
+    justify-content: center; padding: 1rem;
+    background-color: rgb(33 37 41 / 50%); z-index: 100;">
+    <div class="modal" role="dialog" aria-modal="true" style="
+      width: 100%; max-width: 32rem; max-height: 90vh;
+      overflow-y: auto; background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 24px 48px rgb(33 37 41 / 20%);">
+      <div style="
+        display: flex; align-items: center; justify-content: space-between;
+        padding: var(--space-5) var(--space-6);
+        border-bottom: 1px solid var(--color-border);">
+        <h3 id="modal-title" style="margin:0;font-size:var(--text-lg);font-weight:700;">Judul</h3>
+        <button type="button" data-close="modal" style="
+          padding: var(--space-1) var(--space-2); border: 0;
+          background: transparent; font-size: var(--text-lg); cursor: pointer;">
+          ✕</button>
+      </div>
+      <div id="modal-body" style="padding: var(--space-6);"></div>
+      <div style="
+        display: flex; justify-content: flex-end; gap: var(--space-3);
+        padding: var(--space-4) var(--space-6);
+        border-top: 1px solid var(--color-border);">
+        <button class="btn btn--ghost" type="button" data-close="modal">Batal</button>
+        <button class="btn btn--primary" type="button" id="modal-submit">Simpan</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="../js/apoteker/main.js"></script>
+</body>
+</html>
