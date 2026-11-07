@@ -53,7 +53,7 @@ export function initLoginForm() {
         submitBtn.textContent = 'Memproses…';
 
         try {
-            const response = await fetch('/portofolio/server/ulang/baru/api/login/proses-login.php', {
+            const response = await fetch('/../../api/login/proses-login.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
